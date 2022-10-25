@@ -43,7 +43,7 @@ public class DBScan{
     }
 
     /* NOTE: pushAll(stack, neighbours) means push all elements of list neighbours into stack stack */
-    private static void pushAll(){
+    private static void pushAll(Stack stack, NearestNeighbors neighbours){
 
     }
 
@@ -74,7 +74,7 @@ public class DBScan{
                 label(q) = clusterCounter; /* Label neighbor */
                 NearestNeighbors neighbours = rangeQuery(DB, q, eps); /* Find neighbors */
                 if (abs(neighbours) >= minPts) { /* Density check */
-                    S.pushAll(neighbours) /* Add neighbors to stack */
+                    pushAll(stack, neighbours) /* Add neighbors to stack */
                 }
             }
         }
@@ -90,4 +90,3 @@ public class DBScan{
         return N;
     }
 }
-/* Reference: https://en.wikipedia.org/wiki/DBSCAN */

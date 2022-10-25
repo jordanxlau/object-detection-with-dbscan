@@ -1,20 +1,26 @@
 public class Point3D{
 
-	private double X;
-	private double Y;
-	private double Z;
+	private double x;
+	private double y;
+	private double z;
 	private int cluster;
 
+	public point3D(double x, double y, double z){
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+
 	public double getX(){
-		return X;
+		return x;
 	}
 
 	public double getY(){
-		return Y;
+		return y;
 	}
 
 	public double getZ(){
-		return Z;
+		return z;
 	}
 
 	public double distance(Point3D point){

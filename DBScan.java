@@ -1,16 +1,20 @@
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+
 public class DBScan{
     
     //Instance variables
-    private List DB; //list of all points;
+    private Sequence db; //list of all points;
     private double eps;
     private double minPts;
 
     //Constructor
-    public DBScan(Sequence<Point3D> sequence){
+    public DBScan(List<Point3D> sequence){
 
     }
 
-    public double setEps(double eps){
+    /*public double setEps(double eps){
         this.eps = eps;
         return eps;
     }
@@ -21,7 +25,7 @@ public class DBScan{
     }
     
     public void findClusters(){
-        DBSCAN(DB, eps, minPts);
+        DBSCAN(db, eps, minPts);
     }
 
 
@@ -29,7 +33,7 @@ public class DBScan{
 
     }
 
-    public Sequence<Point3D> getPoints(){
+    public List<Point3D> getPoints(){
 
     }
 
@@ -39,52 +43,52 @@ public class DBScan{
 
     public void save(String filename){
 
-    }
+    }*/
 
     /* NOTE: pushAll(stack, neighbours) means push all elements of list neighbours into stack stack */
-    private static void pushAll(Stack stack, NearestNeighbors neighbours){
+    private static void pushAll(Stack stack, NearestNeighbours neighbours){
 
     }
 
-    private void DBSCAN(Sequence db, double eps, double minPts) {
+    private void DBSCAN(List<Point3D> db, double eps, double minPts) {
         int clusterCounter = 0; /* Cluster counter */
 
         for (Point3D p : db) {
             if (p.getClusterLabel() != null) /* Already processed */
                 continue;
-            NearestNeighbors neighbours = rangeQuery(db, p, eps); /* Find neighbors */
-            if (abs(neighbours) < minPts) { /* Density check */
+            NearestNeighbours neighbours = new NearestNeighbours(db, p, eps); /* Find neighbors */
+            if (neighbours.length() < minPts) { /* Density check */
                 p.setClusterLabel("Noise"); /* Label as Noise */
             }
 
             clusterCounter++; /* next cluster label */
-            p.setClusterLabel(C); /* Label initial point */
+            p.setClusterLabel(clusterCounter); /* Label initial point */
 
-            Stack stack = new ArrayStack();
+            Stack<Point3D> stack = new Stack<Point3D>();
             pushAll(stack, neighbours); /* Neighbors to expand */
 
             while (! stack.isEmpty() ) {
                 Point3D q = stack.pop(); /* Process point Q */
-                if (q.getClusterLabel() == Noise)
+                if (q.getClusterLabel() == "Noise")
                     q.setClusterLabel(clusterCounter); /* Noise becomes border pt */
-                else if (q.getClusterLabel() != undefined){} /* Previously processed */
+                else if (q.getClusterLabel() != null){} /* Previously processed */
 
                 q.setClusterLabel(clusterCounter); /* Label neighbor */
-                NearestNeighbors neighbours = rangeQuery(db, q, eps); /* Find neighbors */
-                if (abs(neighbours) >= minPts) { /* Density check */
+                neighbours = new NearestNeighbours(db, q, eps); /* Find neighbors */
+                if (neighbours.length() >= minPts) { /* Density check */
                     pushAll(stack, neighbours); /* Add neighbors to stack */
                 }
             }
         }
     }
 
-    private Sequence rangeQuery(Sequence db, Point3D q, double eps) {
-        Sequence n = new LinkedList<>();//empty list
-        for (Point3D p : db) { /* Scan all points in db */
-            if (distance(q, p) <= eps) { /* Compute distance */
-                n.add(p); /* Add to result */
-            }
-        }
-        return n;
+    public static void main(String[] args){
+        String filename = args[0];
+        int eps = Integer.valueOf(args[1]);
+        int minPts = Integer.valueOf(args[2]);
+
+        System.out.println("TRACE:");
+        System.out.println("filename, eps, minPts: " + filename + eps + minPts);
     }
+
 }

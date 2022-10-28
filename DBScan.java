@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DBScan{
     
     //Instance variables
-    private Sequence db; //list of all points;
+    private List db; //list of all points;
     private double eps;
     private double minPts;
 
@@ -14,7 +14,7 @@ public class DBScan{
 
     }
 
-    /*public double setEps(double eps){
+    public double setEps(double eps){
         this.eps = eps;
         return eps;
     }
@@ -37,13 +37,13 @@ public class DBScan{
 
     }
 
-    public static Sequence<Point3D> read(String filename){
+    public static List<Point3D> read(String filename){
 
     }
 
     public void save(String filename){
 
-    }*/
+    }
 
     /* NOTE: pushAll(stack, neighbours) means push all elements of list neighbours into stack stack */
     private static void pushAll(Stack stack, NearestNeighbours neighbours){

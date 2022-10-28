@@ -1,10 +1,8 @@
-import java.util.*;
-
 public class NearestNeighbours extends Sequence{
 
-	private	List<Point3D> list;
+	private	Sequence<Point3D> list;
 
-	public NearestNeighbours(List<Point3D> list){
+	public NearestNeighbours(Sequence<Point3D> list){
 		this.list = list;
 	}
 	

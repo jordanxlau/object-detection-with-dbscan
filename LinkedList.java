@@ -1,7 +1,7 @@
 import java.util.NoSuchElementException;
-import java.util.*;
+import java.util.Iterator;
 
-public class LinkedList<E> implements List<E>{//This implementation is ?doubly-linked? and contains an iterator
+public class LinkedList<E> implements Sequence<E>{
 
     //Private nested/inner/helper class for Nodes of the list
     private static class Node<T> {

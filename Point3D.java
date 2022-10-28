@@ -1,14 +1,17 @@
+import static java.lang.Math.*;
+
 public class Point3D{
 
 	private double x;
 	private double y;
 	private double z;
-	private int cluster;
+	private Integer clusterLabel; // label(P) of all P is initialized to undefined
 
-	public point3D(double x, double y, double z){
+	public Point3D(double x, double y, double z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		clusterLabel = null;
 	}
 
 	public double getX(){
@@ -23,15 +26,16 @@ public class Point3D{
 		return z;
 	}
 
-	public double distance(Point3D point){
-		System.out.println("NOT IMPLEMENTED YET");
-		return 2.2;
+	public int getClusterLabel(){
+		return clusterLabel;
 	}
 
-	public static void main(String[] args){
-		List l = new LinkedList<Integer>();
-		l.add(1);
-		l.add(3);
+	public void setClusterLabel(int clusterLabel){
+		this.clusterLabel = clusterLabel;
+	}
+
+	public double distance(Point3D point){
+		return sqrt( pow(this.x - point.x, 2) + pow(this.x - point.x, 2) + pow(this.z - point.z, 2) );
 	}
 
 }

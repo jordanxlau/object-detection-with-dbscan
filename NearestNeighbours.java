@@ -12,8 +12,7 @@ public class NearestNeighbours{//ARE WE ALLOWED TO NOT HAVE THIS BE A TYPE OF SE
 	//Helper method
     private List rangeQuery(List<Point3D> db, Point3D q, double eps) {
         List neighbours = new LinkedList<Point3D>();
-        for (int i = 0; i < db.size(); i++) { /* Scan all points in db */ //CAN THIS BE A FOR-EACH LOOP?
-            Point3D p = db.get(i);
+        for (Point3D p : db) { /* Scan all points in db */
             if (q.distance(p) <= eps) { /* Compute distance */
                 neighbours.add(p); /* Add to result */
             }

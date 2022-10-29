@@ -1,6 +1,7 @@
 import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.*;
 
 public class DBScan{
     
@@ -11,10 +12,8 @@ public class DBScan{
     private int clusterCounter; /* Cluster counter */
 
     //Constructor
-    public DBScan(List<Point3D> db, double minPts, double eps){
+    public DBScan(List<Point3D> db){
         this.db = db;
-        this.minPts = minPts;
-        this.eps = eps;
         clusterCounter = 0;
     }
 
@@ -27,7 +26,22 @@ public class DBScan{
         this.minPts = minPts;
         return minPts;
     }
+
+    public int getNumberOfClusters(){
+        return clusterCounter;
+    }
+
+    public List<Point3D> getPoints(){
+        return db;
+    }
+
+    /* pushes all elements of list, neighbours into stack, stack */
+    private static void pushAll(Stack stack, NearestNeighbours neighbours){
+
+    }
     
+    //minPts: The minimum number of points (a threshold) in the neighborhood of a point for this one to be considered to belong to a dense region.
+    //eps: A distance measure that is used to identify the points in the neighborhood of any point
     public void findClusters(List<Point3D> db, double eps, double minPts){
         for (Point3D p : db) {
             if (p.getClusterLabel() != null) /* Already processed */
@@ -58,35 +72,47 @@ public class DBScan{
         }
     }
 
-
-    public int getNumberOfClusters(){
-        return clusterCounter;
-    }
-
-    public List<Point3D> getPoints(){
-
-    }
-
     public static List<Point3D> read(String filename){
+        String input;
+        double x, y, z;
+        List<Point3D> db = new ArrayList<Point3D>();
 
+        try {
+            BufferedReader r = new BufferedReader(new FileReader("Input.csv"));
+            input = r.readLine();
+            while ((input = r.readLine()) != null) {
+                String[] array = input.split(",");
+
+                x = Double.valueOf(array[0]);
+                y = Double.valueOf(array[1]);
+                z = Double.valueOf(array[2]);
+
+                db.add( new Point3D(x, y, z) );
+            }
+
+            r.close();
+        } catch (IOException e) {}
+
+        return db;
     }
 
     public void save(String filename){
 
     }
 
-    /* NOTE: pushAll(stack, neighbours) means push all elements of list neighbours into stack stack */
-    private static void pushAll(Stack stack, NearestNeighbours neighbours){
-
-    }
-
     public static void main(String[] args){
+        /*args = {}
+
         String filename = args[0];
         int eps = Integer.valueOf(args[1]);
         int minPts = Integer.valueOf(args[2]);
 
         System.out.println("TRACE:");
         System.out.println("filename, eps, minPts: " + filename + eps + minPts);
+
+        DBScan scene = new DBScan(read(filename));
+        scene.setEps(eps);
+        scene.setMinPts(minPts);*/
     }
 
 }

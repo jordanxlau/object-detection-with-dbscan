@@ -113,7 +113,7 @@ public class DBScan{
     }
 
     public static void main(String[] args){
-        args = new String[]{"Point_Cloud_4.csv", "5", "3"};
+        args = new String[]{"Point_Cloud_1.csv", "5", "3"};
         String filename = args[0];
         double eps = Double.valueOf(args[1]);
         double minPts = Double.valueOf(args[2]);
@@ -125,7 +125,7 @@ public class DBScan{
         scene.setEps(eps);
         scene.setMinPts(minPts);
         scene.findClusters();
-        //scene.save(filename + "_" + eps + "_" + minPts + "_" + scene.getNumberOfClusters() + "_clusters.csv");
+        scene.save(filename + "_" + eps + "_" + minPts + "_" + scene.getNumberOfClusters() + "_clusters.csv");
     }
 
 }

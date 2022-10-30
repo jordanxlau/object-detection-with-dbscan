@@ -1,5 +1,4 @@
 import static java.lang.Math.*;
-
 public class Point3D{
 
 	private double x;
@@ -33,11 +32,6 @@ public class Point3D{
 
 	public void setClusterLabel(int clusterLabel){
 		this.clusterLabel = clusterLabel;
-	}
-
-	public String getRGB(){
-		int colour = this.clusterLabel;
-		return "0, 0, 0";
 	}
 
 	public String toString(){

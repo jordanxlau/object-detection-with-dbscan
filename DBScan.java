@@ -6,9 +6,9 @@ import java.io.*;
 public class DBScan{
     
     //Instance variables
-    private List db; /* list of all points; */
-    private double eps;
-    private double minPts;
+    private List<Point3D> db; /* list of all points; */
+    private double eps; //eps: A distance measure that is used to identify the points in the neighborhood of any point
+    private double minPts; //minPts: The minimum number of points (a threshold) in the neighborhood of a point for this one to be considered to belong to a dense region.
     private int clusterCounter; /* Cluster counter */
 
     //Constructor
@@ -37,37 +37,41 @@ public class DBScan{
 
     /* pushes all elements of list, neighbours into stack, stack */
     private static void pushAll(Stack stack, NearestNeighbours neighbours){
-        while(Point3D p : neighbours.db){
+        for (Point3D p : neighbours.getList()){
             stack.push(p);
         }
     }
     
-    //minPts: The minimum number of points (a threshold) in the neighborhood of a point for this one to be considered to belong to a dense region.
-    //eps: A distance measure that is used to identify the points in the neighborhood of any point
-    public void findClusters(List<Point3D> db, double eps, double minPts){
-        for (Point3D p : db) {
+    public void findClusters(){
+        for (Point3D p : this.db) {
+            System.out.println(p + " label: " + p.getClusterLabel());
             if (p.getClusterLabel() != null) /* Already processed */
                 continue;
-            NearestNeighbours neighbours = new NearestNeighbours(db, p, eps); /* Find neighbors */
-            if (neighbours.length() < minPts) { /* Density check */
+            NearestNeighbours neighbours = new NearestNeighbours(this.db, p, this.eps); /* Find neighbors */
+            if (neighbours.length() < this.minPts) { /* Density check */
                 p.setClusterLabel(-1); /* Label as Noise */
             }
 
-            clusterCounter++; /* next cluster label */
-            p.setClusterLabel(clusterCounter); /* Label initial point */
+            this.clusterCounter++; /* next cluster label */
+            p.setClusterLabel(this.clusterCounter); /* Label initial point */
+
+            
 
             Stack<Point3D> stack = new Stack<Point3D>();
             pushAll(stack, neighbours); /* Neighbors to expand */
 
+            //ERROR IN THIS WHILE LOOP SOMEWHERE
             while (! stack.isEmpty() ) {
                 Point3D q = stack.pop(); /* Process point Q */
+                System.out.println(q);
                 if (q.getClusterLabel() == -1) /* The point is Noise */
-                    q.setClusterLabel(clusterCounter); /* Noise becomes border pt */
-                else if (q.getClusterLabel() != null) /* Previously processed */
+                    q.setClusterLabel(this.clusterCounter); /* Noise becomes border pt */
+                if (q.getClusterLabel() != null){ /* Previously processed */
                     continue;
-                q.setClusterLabel(clusterCounter); /* Label neighbor */
-                neighbours = new NearestNeighbours(db, q, eps); /* Find neighbors */
-                if (neighbours.length() >= minPts) { /* Density check */
+                }
+                q.setClusterLabel(this.clusterCounter); /* Label neighbor */
+                neighbours = new NearestNeighbours(this.db, q, this.eps); /* Find neighbors */
+                if (neighbours.length() >= this.minPts) { /* Density check */
                     pushAll(stack, neighbours); /* Add neighbors to stack */
                 }
             }
@@ -77,6 +81,7 @@ public class DBScan{
     public static List<Point3D> read(String filename){
         String input;
         double x, y, z;
+        List<Point3D> db = new ArrayList<Point3D>();
 
         try {
             BufferedReader r = new BufferedReader(new FileReader(filename));
@@ -88,7 +93,7 @@ public class DBScan{
                 y = Double.valueOf(array[1]);
                 z = Double.valueOf(array[2]);
 
-                this.db.add( new Point3D(x, y, z) );
+                db.add( new Point3D(x, y, z) );
             }
 
             r.close();
@@ -98,36 +103,31 @@ public class DBScan{
     }
 
     public void save(String filename){
-        String input;
-        double x, y, z;
-        List<Point3D> db = new ArrayList<Point3D>();
-
         try {
             BufferedWriter w = new BufferedWriter(new FileWriter(filename));
             w.write("x,y,z,C,R,G,B");
-            while (this.db.size() > 0) {
-                Point3D p = db.pop();
-                w.write( p.getX() + ", " + p.getY() + ", " + p.getZ() + ", " p.getClusterLabel() );
+            for (Point3D p : this.db) {
+                w.write( p.getX() + ", " + p.getY() + ", " + p.getZ() + ", " + p.getClusterLabel() );
             }
 
             w.close();
         } catch (IOException e) {}
-
-        return db;
     }
 
     public static void main(String[] args){
+        args = new String[]{"Point_Cloud_4.csv", "5", "3"};
         String filename = args[0];
         double eps = Double.valueOf(args[1]);
         double minPts = Double.valueOf(args[2]);
 
-        System.out.println("TRACE: filename eps minPts: " + filename + " " + eps + " " + minPts);
+        System.out.println("filename eps minPts: " + filename + " " + eps + " " + minPts);
 
-        DBScan scene = new DBScan(new ArrayList<Point3D>());
+        DBScan scene = new DBScan(read(filename));
+        System.out.println(read(filename));
         scene.setEps(eps);
         scene.setMinPts(minPts);
-        scene.findClusters(read(filename), eps, minPts);
-        scene.save(filename.substring(0, filename.length() - 4) + "_clusters.csv");
+        scene.findClusters();
+        //scene.save(filename + "_" + eps + "_" + minPts + "_" + scene.getNumberOfClusters() + "_clusters.csv");
     }
 
 }

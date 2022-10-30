@@ -143,7 +143,7 @@ public class DBScan{
     }
 
     public static void main(String[] args){
-        args = new String[]{"Point_Cloud_1.csv", "1.4", "50"};
+        args = new String[]{"Point_Cloud_1.csv", "1.5", "40"};
         
         String filename = args[0];
         double eps = Double.valueOf(args[1]);

@@ -1,13 +1,14 @@
 import pandas as pd
 import open3d as o3d
-import os
 import numpy as np
 
-#Get raw point cloud:
-df_Raw_Point_Cloud = pd.read_csv("Point_Cloud_1_1.4_50.0_59_clusters.csv")
+filename = "Point_Cloud_1_clusters"
 
 #Get raw point cloud:
-df_Raw_Point_Cloud = pd.read_csv("Point_Cloud_1_1.4_50.0_59_clusters.csv")
+df_Raw_Point_Cloud = pd.read_csv(filename + ".csv")
+
+#Get raw point cloud:
+df_Raw_Point_Cloud = pd.read_csv(filename + ".csv")
 
 #Full point cloud:
 pcd = o3d.geometry.PointCloud()

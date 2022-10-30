@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
-public class NearestNeighbours{//ARE WE ALLOWED TO NOT HAVE THIS BE A TYPE OF SEQUENCE?
+public class NearestNeighbours{
 
 	private	List<Point3D> db;
 
@@ -18,5 +18,5 @@ public class NearestNeighbours{//ARE WE ALLOWED TO NOT HAVE THIS BE A TYPE OF SE
         }
         return neighbours;
     }
-    
+
 }

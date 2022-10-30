@@ -35,6 +35,11 @@ public class Point3D{
 		this.clusterLabel = clusterLabel;
 	}
 
+	public String getRGB(){
+		int colour = this.clusterLabel;
+		return "0, 0, 0";
+	}
+
 	public String toString(){
 		return "(" + this.x + ", " + this.y + ", " + this.z + ")";
 	}

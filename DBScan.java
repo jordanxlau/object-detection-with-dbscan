@@ -58,7 +58,6 @@ public class DBScan{
             Stack<Point3D> stack = new Stack<Point3D>();
             pushAll(stack, pNeighbours); /* Neighbors to expand */
 
-            //ERROR IN THIS WHILE LOOP SOMEWHERE
             while (! stack.isEmpty() ) {
                 Point3D q = stack.pop(); /* Process point Q */
                 if (q.getClusterLabel() == -1) /* The point is Noise */
@@ -104,7 +103,7 @@ public class DBScan{
             BufferedWriter w = new BufferedWriter(new FileWriter(filename));
             w.write("x,y,z,C,R,G,B");
             for (Point3D p : this.db) {
-                w.write("\n" + p.getX() + ", " + p.getY() + ", " + p.getZ() + ", " + p.getClusterLabel() );
+                w.write("\n" + p.getX() + ", " + p.getY() + ", " + p.getZ() + ", " + p.getClusterLabel() + ", " + p.getRGB());
             }
 
             w.close();
@@ -120,7 +119,6 @@ public class DBScan{
         System.out.println("filename eps minPts: " + filename + " " + eps + " " + minPts);
 
         DBScan scene = new DBScan(read(filename));
-        //System.out.println(read(filename));
         scene.setEps(eps);
         scene.setMinPts(minPts);
         scene.findClusters();

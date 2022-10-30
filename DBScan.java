@@ -44,7 +44,6 @@ public class DBScan{
     
     public void findClusters(){
         for (Point3D p : this.db) {
-//            System.out.println(p + " label: " + p.getClusterLabel());
             if (p.getClusterLabel() != 0) /* Already processed */
                 continue;
             List<Point3D> pNeighbours = (new NearestNeighbours(this.db)).rangeQuery(p, this.eps); /* Find neighbors */
@@ -118,61 +117,40 @@ public class DBScan{
     private List<String> getRGBs(){
         List<String> colours = new ArrayList<String>();
         double r = 1, g = 0, b = 0;
-        double increment = 1536 / this.clusterCounter;
 
-        for (int c = 0; c < 1536; c+=increment){
+        //Go through a 1536 different colours
+        for (int c = 0; c < 1536; c+=1){
             if (c < 256){
-                g+=(increment/256);
+                g+=(1.0/256);
             } else if (c >= 256 && c < 512){
-                r-=(increment/256);
+                r-=(1.0/256);
             } else if (c >= 512 && c < 768){
-                b+=(increment/256);
+                b+=(1.0/256);
             } else if (c >= 768 && c < 1024){
-                g-=(increment/256);
+                g-=(1.0/256);
             } else if (c >= 1024 && c < 1280){
-                r+=(increment/256);
+                r+=(1.0/256);
             } else if (c >= 1280 && c < 1536){
-                b-=(increment/256);
+                b-=(1.0/256);
             }
-            colours.add(r + ", " + g + ", " + b);
-        }
-        
-        return colours;
-    }
 
-    private static List<String> getRGBs(int clusterCounter){
-        List<String> colours = new ArrayList<String>();
-        double r = 1, g = 0, b = 0;
-        double increment = 1536 / clusterCounter;
-
-        for (int c = 0; c < 1536; c+=increment){
-            if (c < 256){
-                g+=(increment/256);
-            } else if (c >= 256 && c < 512){
-                r-=(increment/256);
-            } else if (c >= 512 && c < 768){
-                b+=(increment/256);
-            } else if (c >= 768 && c < 1024){
-                g-=(increment/256);
-            } else if (c >= 1024 && c < 1280){
-                r+=(increment/256);
-            } else if (c >= 1280 && c < 1536){
-                b-=(increment/256);
-            }
-            colours.add(r + ", " + g + ", " + b);
+            //Select only every x colours to get the most even spread of colours
+            int x = 1536/this.clusterCounter;
+            if (c % x == 0)
+                colours.add(r + ", " + g + ", " + b);
         }
-        
+
         return colours;
     }
 
     public static void main(String[] args){
-        args = new String[]{"Point_Cloud_1.csv", "1", "100"};
+        args = new String[]{"Point_Cloud_1.csv", "1.2", "50"};
         
         String filename = args[0];
         double eps = Double.valueOf(args[1]);
         double minPts = Double.valueOf(args[2]);
 
-        //System.out.println("filename: " + filename);
+        System.out.println("filename: " + filename);
 
         DBScan scene = new DBScan(read(filename));
         scene.setEps(eps);

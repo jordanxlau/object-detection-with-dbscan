@@ -35,6 +35,10 @@ public class Point3D{
 		this.clusterLabel = clusterLabel;
 	}
 
+	public String toString(){
+		return "(" + this.x + ", " + this.y + ", " + this.z + ")";
+	}
+
 	public double distance(Point3D point){
 		return sqrt( pow(this.x - point.x, 2) + pow(this.x - point.x, 2) + pow(this.z - point.z, 2) );
 	}

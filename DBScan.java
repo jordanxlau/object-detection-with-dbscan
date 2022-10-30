@@ -36,8 +36,8 @@ public class DBScan{
     }
 
     /* pushes all elements of list, neighbours into stack, stack */
-    private static void pushAll(Stack stack, NearestNeighbours neighbours){
-        for (Point3D p : neighbours.getList()){
+    private static void pushAll(Stack stack, List<Point3D> neighbours){
+        for (Point3D p : neighbours){
             stack.push(p);
         }
     }
@@ -47,18 +47,16 @@ public class DBScan{
             System.out.println(p + " label: " + p.getClusterLabel());
             if (p.getClusterLabel() != null) /* Already processed */
                 continue;
-            NearestNeighbours neighbours = new NearestNeighbours(this.db, p, this.eps); /* Find neighbors */
-            if (neighbours.length() < this.minPts) { /* Density check */
+            List<Point3D> pNeighbours = (new NearestNeighbours(this.db)).rangeQuery(p, this.eps); /* Find neighbors */
+            if (pNeighbours.size() < this.minPts) { /* Density check */
                 p.setClusterLabel(-1); /* Label as Noise */
             }
 
             this.clusterCounter++; /* next cluster label */
             p.setClusterLabel(this.clusterCounter); /* Label initial point */
 
-            
-
             Stack<Point3D> stack = new Stack<Point3D>();
-            pushAll(stack, neighbours); /* Neighbors to expand */
+            pushAll(stack, pNeighbours); /* Neighbors to expand */
 
             //ERROR IN THIS WHILE LOOP SOMEWHERE
             while (! stack.isEmpty() ) {
@@ -70,9 +68,9 @@ public class DBScan{
                     continue;
                 }
                 q.setClusterLabel(this.clusterCounter); /* Label neighbor */
-                neighbours = new NearestNeighbours(this.db, q, this.eps); /* Find neighbors */
-                if (neighbours.length() >= this.minPts) { /* Density check */
-                    pushAll(stack, neighbours); /* Add neighbors to stack */
+                List<Point3D> qNeighbours = (new NearestNeighbours(this.db)).rangeQuery(q, this.eps); /* Find neighbors */
+                if (qNeighbours.size() >= this.minPts) { /* Density check */
+                    pushAll(stack, qNeighbours); /* Add neighbors to stack */
                 }
             }
         }

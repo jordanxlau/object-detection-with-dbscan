@@ -14,7 +14,7 @@ public class DBScan{
     //Constructor
     public DBScan(List<Point3D> db){
         this.db = db;
-        clusterCounter = 1;
+        clusterCounter = 0;
     }
 
     public double setEps(double eps){
@@ -56,7 +56,6 @@ public class DBScan{
 
             Stack<Point3D> stack = new Stack<Point3D>();
             pushAll(stack, pNeighbours); /* Neighbors to expand */
-
             while (! stack.isEmpty() ) {
                 Point3D q = stack.pop(); /* Process point Q */
                 if (q.getClusterLabel() == -1) /* The point is Noise */
@@ -144,7 +143,7 @@ public class DBScan{
     }
 
     public static void main(String[] args){
-        args = new String[]{"Point_Cloud_1.csv", "1.2", "50"};
+        args = new String[]{"Point_Cloud_1.csv", "1.4", "50"};
         
         String filename = args[0];
         double eps = Double.valueOf(args[1]);

@@ -4,10 +4,10 @@ import os
 import numpy as np
 
 #Get raw point cloud:
-df_Raw_Point_Cloud = pd.read_csv("Point_Cloud_1_1.2_50.0_76_clusters.csv")
+df_Raw_Point_Cloud = pd.read_csv("Point_Cloud_1_1.4_50.0_59_clusters.csv")
 
 #Get raw point cloud:
-df_Raw_Point_Cloud = pd.read_csv("Point_Cloud_1_1.2_50.0_76_clusters.csv")
+df_Raw_Point_Cloud = pd.read_csv("Point_Cloud_1_1.4_50.0_59_clusters.csv")
 
 #Full point cloud:
 pcd = o3d.geometry.PointCloud()

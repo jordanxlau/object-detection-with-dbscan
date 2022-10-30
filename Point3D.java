@@ -39,7 +39,7 @@ public class Point3D{
 	}
 
 	public double distance(Point3D point){
-		return sqrt( pow(this.x - point.x, 2) + pow(this.x - point.x, 2) + pow(this.z - point.z, 2) );
+		return sqrt( pow(this.x - point.x, 2) + pow(this.y - point.y, 2) + pow(this.z - point.z, 2) );
 	}
 
 }

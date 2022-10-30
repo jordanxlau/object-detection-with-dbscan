@@ -61,7 +61,6 @@ public class DBScan{
             //ERROR IN THIS WHILE LOOP SOMEWHERE
             while (! stack.isEmpty() ) {
                 Point3D q = stack.pop(); /* Process point Q */
-                System.out.println(q);
                 if (q.getClusterLabel() == -1) /* The point is Noise */
                     q.setClusterLabel(this.clusterCounter); /* Noise becomes border pt */
                 if (q.getClusterLabel() != 0){ /* Previously processed */
@@ -105,7 +104,7 @@ public class DBScan{
             BufferedWriter w = new BufferedWriter(new FileWriter(filename));
             w.write("x,y,z,C,R,G,B");
             for (Point3D p : this.db) {
-                w.write( p.getX() + ", " + p.getY() + ", " + p.getZ() + ", " + p.getClusterLabel() );
+                w.write("\n" + p.getX() + ", " + p.getY() + ", " + p.getZ() + ", " + p.getClusterLabel() );
             }
 
             w.close();
@@ -113,7 +112,7 @@ public class DBScan{
     }
 
     public static void main(String[] args){
-        args = new String[]{"Point_Cloud_1.csv", "5", "3"};
+        args = new String[]{"Point_Cloud_1.csv", "1.5", "4"};
         String filename = args[0];
         double eps = Double.valueOf(args[1]);
         double minPts = Double.valueOf(args[2]);
@@ -125,7 +124,7 @@ public class DBScan{
         scene.setEps(eps);
         scene.setMinPts(minPts);
         scene.findClusters();
-        scene.save(filename + "_" + eps + "_" + minPts + "_" + scene.getNumberOfClusters() + "_clusters.csv");
+        scene.save(filename.substring(0,filename.length() - 4) + "_" + eps + "_" + minPts + "_" + scene.getNumberOfClusters() + "_clusters.csv");
     }
 
 }

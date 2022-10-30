@@ -14,7 +14,7 @@ public class DBScan{
     //Constructor
     public DBScan(List<Point3D> db){
         this.db = db;
-        clusterCounter = 0;
+        clusterCounter = 1;
     }
 
     public double setEps(double eps){
@@ -45,7 +45,7 @@ public class DBScan{
     public void findClusters(){
         for (Point3D p : this.db) {
             System.out.println(p + " label: " + p.getClusterLabel());
-            if (p.getClusterLabel() != null) /* Already processed */
+            if (p.getClusterLabel() != 0) /* Already processed */
                 continue;
             List<Point3D> pNeighbours = (new NearestNeighbours(this.db)).rangeQuery(p, this.eps); /* Find neighbors */
             if (pNeighbours.size() < this.minPts) { /* Density check */
@@ -64,7 +64,7 @@ public class DBScan{
                 System.out.println(q);
                 if (q.getClusterLabel() == -1) /* The point is Noise */
                     q.setClusterLabel(this.clusterCounter); /* Noise becomes border pt */
-                if (q.getClusterLabel() != null){ /* Previously processed */
+                if (q.getClusterLabel() != 0){ /* Previously processed */
                     continue;
                 }
                 q.setClusterLabel(this.clusterCounter); /* Label neighbor */
@@ -121,7 +121,7 @@ public class DBScan{
         System.out.println("filename eps minPts: " + filename + " " + eps + " " + minPts);
 
         DBScan scene = new DBScan(read(filename));
-        System.out.println(read(filename));
+        //System.out.println(read(filename));
         scene.setEps(eps);
         scene.setMinPts(minPts);
         scene.findClusters();

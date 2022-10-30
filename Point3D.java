@@ -5,14 +5,14 @@ public class Point3D{
 	private double x;
 	private double y;
 	private double z;
-	private Integer clusterLabel; // label(P) of all P is initialized to undefined
+	private Integer clusterLabel; // label of all points is initialized to 0 (undefined)
 	//label -1 means "Noise"
 
 	public Point3D(double x, double y, double z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		clusterLabel = null;
+		clusterLabel = 0;
 	}
 
 	public double getX(){
@@ -27,7 +27,7 @@ public class Point3D{
 		return z;
 	}
 
-	public Integer getClusterLabel(){
+	public int getClusterLabel(){
 		return clusterLabel;
 	}
 

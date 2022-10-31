@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /** represents all points in the neighbourhood of a certain {@link Point3D}
- * @author Jordan Lau */
+ * @author Jordan Lau 300240600 */
 public class NearestNeighbours{
 
     /** the point cloud database, in the form of a {@link List} */

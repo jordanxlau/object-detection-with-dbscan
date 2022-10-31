@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.io.*;
 
 /** implements Density-Based Spatial Clustering of Applications with Noise algorithm
- * @author Jordan Lau */
+ * @author Jordan Lau 300240600 */
 public class DBScan{
     
     /** list of all points */

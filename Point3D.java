@@ -1,7 +1,7 @@
 import static java.lang.Math.*;
 
 /** represents a 3D point
- * @author Jordan Lau */
+ * @author Jordan Lau 340600240 */
 public class Point3D{
 
 	/** x coordinate value */

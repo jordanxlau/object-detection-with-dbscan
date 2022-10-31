@@ -53,7 +53,7 @@ public class Point3D{
 		return "(" + this.x + ", " + this.y + ", " + this.z + ")";
 	}
 
-	/** computes the cartesian distance between two points
+	/** computes the euclidean distance between two points
 	 * @param point the point from which the distance to this Point object */
 	public double distance(Point3D point){
 		return sqrt( pow(this.x - point.x, 2) + pow(this.y - point.y, 2) + pow(this.z - point.z, 2) );

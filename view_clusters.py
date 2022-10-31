@@ -2,7 +2,7 @@ import pandas as pd
 import open3d as o3d
 import numpy as np
 
-filename = "Point_Cloud_1_6.0_4.0_8_clusters"
+filename = "Point_Cloud_1_0.6_500.0_967_clusters"
 
 #Get raw point cloud:
 df_Raw_Point_Cloud = pd.read_csv(filename + ".csv")

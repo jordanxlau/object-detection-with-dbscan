@@ -14,6 +14,7 @@ public class NearestNeighbours{
 	}
 	
 	/** finds the neighbours of a point
+     * O(n) complexity
      * @param q the point
      * @param eps the distance within which another point is considered "a neighbour"
      * @return list of points that are neighbours */

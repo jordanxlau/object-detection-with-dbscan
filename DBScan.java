@@ -54,7 +54,8 @@ public class DBScan{
         }
     }
     
-    /** implements the DBScan algorithm */
+    /** implements the DBScan algorithm
+     * O(n) complexity */
     public void findClusters(){
         for (Point3D p : this.db) {
             if (p.getClusterLabel() != 0) // Already processed

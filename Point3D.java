@@ -38,6 +38,18 @@ public class Point3D{
 		return z;
 	}
 
+	/** gets coordinate x, y or z if axis 0, 1, or 2
+	 * @param axis 0, 1 or 2 for x, y or z axis
+	 * @return the coordinate of the point at that axis*/
+	public double get(int axis) {
+		switch(axis) {
+			case 0: return x;
+			case 1: return y;
+			case 2: return z;
+			default: return 0.0;
+		}
+	}
+
 	/** @return the cluster the point belongs to*/
 	public int getClusterLabel(){
 		return clusterLabel;

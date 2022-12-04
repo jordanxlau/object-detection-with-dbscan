@@ -14,7 +14,7 @@ public class NearestNeighboursKD {
 		this.db = new KDtree();
 
 		for (Point3D p : db) {
-			this.db.insert(p, this.db.root, 0);
+			this.db.insert(p, this.db.getRoot(), 0);
 		}
 	}
 
@@ -31,16 +31,18 @@ public class NearestNeighboursKD {
      * @param neighbours the list of neighbours
      * @param node the current node to be compared/searched
      * @return list of points that are neighbours */
-    public List<Point3D> rangeQuery(Point3D p, double eps, List neighbours, KDnode node) {
-        if (node == null) //
+	public List<Point3D> rangeQuery(Point3D p, double eps, List neighbours, KDtree.KDnode node) {
+		if (node == null){
+			System.out.println("TRACE");
 			return new ArrayList<Point3D>();
-		if (p.distance(node.point) < eps) //this node's point is within the specified epislon of p
+		}
+		if (p.distance(node.point) < eps) //this node's point is within the specified epsilon of p
 			neighbours.add(node.point); //add the current node to the 
-		if (p.get(node.axis) - eps <= node.value) 
-			return rangeQuery(p, eps, neighbours, node.left); //search the left subtree
-		if (p.get(node.axis) + eps > node.value)
-			return rangeQuery(p, eps, neighbours, node.right); //search the right subtree
+		if (p.get(node.axis) - eps <= node.value) //neighbours may be in the left subtree
+			return rangeQuery(p, eps, neighbours, node.left); 
+		if (p.get(node.axis) + eps > node.value) //neighbours may be in the right subtree
+			return rangeQuery(p, eps, neighbours, node.right);
 		return neighbours;
-    }
-	
+	}
+
 }

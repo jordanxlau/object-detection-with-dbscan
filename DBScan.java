@@ -57,10 +57,12 @@ public class DBScan{
     /** implements the DBScan algorithm
      * O(n) complexity */
     public void findClusters(){
+        NearestNeighboursKD nn = new NearestNeighboursKD(this.db);
+
         for (Point3D p : this.db) {
             if (p.getClusterLabel() != 0) // Already processed
                 continue;
-            List<Point3D> pNeighbours = (new NearestNeighbours(this.db)).rangeQuery(p, this.eps); // Find neighbors
+            List<Point3D> pNeighbours = nn.rangeQuery(p, this.eps, new ArrayList<Point3D>(), nn.getTree().getRoot()); // Find neighbors
             if (pNeighbours.size() < this.minPts) { // Density check
                 p.setClusterLabel(-1); // Label as Noise
             }
@@ -78,7 +80,7 @@ public class DBScan{
                     continue;
                 }
                 q.setClusterLabel(this.clusterCounter); // label neighbor with cluster number
-                List<Point3D> qNeighbours = (new NearestNeighbours(this.db)).rangeQuery(q, this.eps); // find neighbors of Q
+                List<Point3D> qNeighbours = nn.rangeQuery(q, this.eps, new ArrayList<Point3D>(), nn.getTree().getRoot()); // find neighbors of Q
                 if (qNeighbours.size() >= this.minPts) { // neighbourhood contains minimum number of pts
                     pushAll(stack, qNeighbours); // Add neighbors to stack
                 }
@@ -168,6 +170,7 @@ public class DBScan{
 
     /** main method, reads a file, labels clusters accordingly and produces a new file with each cluster labelled and associated with an rgb colour */
     public static void main(String[] args){
+        args = new String[]{"Point_Cloud_1.csv", "0.8", "40"};
         String filename = args[0]; // process array, args
         double eps = Double.valueOf(args[1]);
         double minPts = Double.valueOf(args[2]);

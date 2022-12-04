@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * @author Jordan Lau 300240600 */
 public class NearestNeighboursKD {
 	
-	private class KDnode {
+	public class KDnode {
 
 			public Point3D point;
 			public int axis; //the axis that this point uses to compare
@@ -23,7 +23,7 @@ public class NearestNeighboursKD {
 		
 	}
 	
-	private class KDtree {
+	public class KDtree {
 		
 		private KDnode root;
 		private int currentAxis;
@@ -49,6 +49,12 @@ public class NearestNeighboursKD {
 			return node;
 		}
 
+		/** getter for the root
+		 * @return the {@link KDnode} that is the root of this tree */
+		public KDnode getRoot(){
+			return this.root;
+		}
+
 	}
 
 	/** the point cloud database */
@@ -56,9 +62,17 @@ public class NearestNeighboursKD {
 
 	/** @param db the point cloud database */
 	public NearestNeighboursKD(List<Point3D> db) {
+		this.db = new KDtree();
+
 		for (Point3D p : db) {
 			this.db.insert(p, this.db.root, 0);
 		}
+	}
+
+	/** getter for db tree
+	 * @return the {@link KDtree} containing all points in the point cloud database */
+	public KDtree getTree(){
+		return this.db;
 	}
 
 	/** finds the neighbours of a point

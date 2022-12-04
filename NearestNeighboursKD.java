@@ -63,20 +63,20 @@ public class NearestNeighboursKD {
 
 	/** finds the neighbours of a point
      * O(logn) complexity in average case?
-     * @param p
+     * @param p the point
      * @param eps the distance within which another point is considered "a neighbour"
-     * @param db
-     * @param node
+     * @param neighbours the list of neighbours
+     * @param node the current node to be compared/searched
      * @return list of points that are neighbours */
     public List<Point3D> rangeQuery(Point3D p, double eps, List neighbours, KDnode node) {
-        if (node == null)
+        if (node == null) //
 			return new ArrayList<Point3D>();
 		if (p.distance(node.point) < eps) //this node's point is within the specified epislon of p
-			neighbours.add(node.point);
-		if (p.get(node.axis) - eps <= node.value) //the point's comparing value minus epsilon is less that that of the node
-			return rangeQuery(p, eps, neighbours, node.left);
-		if (p.get(node.axis) + eps > node.value) //
-			return rangeQuery(p, eps, neighbours, node.right);
+			neighbours.add(node.point); //add the current node to the 
+		if (p.get(node.axis) - eps <= node.value) 
+			return rangeQuery(p, eps, neighbours, node.left); //search the left subtree
+		if (p.get(node.axis) + eps > node.value)
+			return rangeQuery(p, eps, neighbours, node.right); //search the right subtree
 		return neighbours;
     }
 	

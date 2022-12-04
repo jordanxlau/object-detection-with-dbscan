@@ -60,7 +60,7 @@ public class DBScan{
         for (Point3D p : this.db) {
             if (p.getClusterLabel() != 0) // Already processed
                 continue;
-            List<Point3D> pNeighbours = (new NearestNeighboursKD(this.db)).rangeQuery(p, this.eps); // Find neighbors
+            List<Point3D> pNeighbours = (new NearestNeighbours(this.db)).rangeQuery(p, this.eps); // Find neighbors
             if (pNeighbours.size() < this.minPts) { // Density check
                 p.setClusterLabel(-1); // Label as Noise
             }
@@ -78,7 +78,7 @@ public class DBScan{
                     continue;
                 }
                 q.setClusterLabel(this.clusterCounter); // label neighbor with cluster number
-                List<Point3D> qNeighbours = (new NearestNeighboursKD(this.db)).rangeQuery(q, this.eps); // find neighbors of Q
+                List<Point3D> qNeighbours = (new NearestNeighbours(this.db)).rangeQuery(q, this.eps); // find neighbors of Q
                 if (qNeighbours.size() >= this.minPts) { // neighbourhood contains minimum number of pts
                     pushAll(stack, qNeighbours); // Add neighbors to stack
                 }

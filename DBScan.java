@@ -170,7 +170,7 @@ public class DBScan{
 
     /** main method, reads a file, labels clusters accordingly and produces a new file with each cluster labelled and associated with an rgb colour */
     public static void main(String[] args){
-        args = new String[]{"Point_Cloud_1.csv", "1.7", "40"};
+        args = new String[]{"Point_Cloud_1.csv", "0.8", "40"};
         String filename = args[0]; // process array, args
         double eps = Double.valueOf(args[1]);
         double minPts = Double.valueOf(args[2]);

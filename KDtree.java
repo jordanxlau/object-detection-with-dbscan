@@ -1,3 +1,5 @@
+/** represents a 3-dimensional tree that stores points
+ * @author Jordan Lau 300240600 */
 public class KDtree {
 
 	public class KDnode {

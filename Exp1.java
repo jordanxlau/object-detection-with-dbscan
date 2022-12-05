@@ -39,22 +39,26 @@ public class Exp1 {
     }
 
 	public static void main(String[] args) throws Exception {
-		args = new String[]{"xerophthalmiology", "0.05", "Point_Cloud_1.csv", "-5.429850155", "0.807567048", "-0.398216823"};// xerophthalmiology 0.05 Point_Cloud_1.csv -5.429850155 0.807567048 -0.398216823
+		args = new String[]{"xerophthalmiology", "0.05", "Point_Cloud_1.csv", "14.15982089", "4.680702457", "-0.133791584"};
 
 		// not reading args[0]
 		double eps= Double.parseDouble(args[1]);
 
-		// reads the csv file
-		List<Point3D> points= Exp1.read(args[2]);
+		List<Point3D> points= Exp1.read(args[2]); // reads the csv file
 
 		Point3D query= new Point3D(Double.parseDouble(args[3]), Double.parseDouble(args[4]), Double.parseDouble(args[5]));
 
-		// creates the NearestNeighbor instance
-		NearestNeighboursKD nn= new NearestNeighboursKD(points);
-		List<Point3D> neighbors= nn.rangeQuery(query,eps,new ArrayList<Point3D>(),nn.getTree().getRoot());
-		System.out.println("TRACE: " + nn.getTree().getRoot().point);
+		//NearestNeighboursKD nn= new NearestNeighboursKD(points);
+		//List<Point3D> neighbors= nn.rangeQuery(query,eps,new ArrayList<Point3D>(),nn.getTree().getRoot());
+		NearestNeighbours nn= new NearestNeighbours(points);
+		List<Point3D> neighbors= nn.rangeQuery(query,eps);
 
-		System.out.println("number of neighbors= "+neighbors.size());
-		System.out.println(neighbors);
-	}   
+		try{
+			BufferedWriter w = new BufferedWriter(new FileWriter("pt6_lin.txt"));
+			for (Point3D p : neighbors)
+				w.write(p + "\n");
+			w.close();
+		} catch (Exception e){}
+
+	}
 }

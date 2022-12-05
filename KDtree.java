@@ -14,6 +14,14 @@ public class KDtree {
 			this.value= pt.get(axis);
 			left= right= null;
 		}
+
+		public boolean hasLeft(){
+			return this.left != null;
+		}
+
+		public boolean hasRight(){
+			return this.right != null;
+		}
 	
 	}
 
@@ -31,6 +39,11 @@ public class KDtree {
 	 * @param currentAxis the axis on which the comparison of the point will be made
 	 * @return the node inserted */
 	public KDnode insert(Point3D p, KDnode node, int currentAxis) {
+		if (root == null){
+			root = new KDnode(p, currentAxis);
+			//return root;
+		}
+
 		if (node == null)
 			node = new KDnode(p, currentAxis);
 		else if (p.get(currentAxis) <= node.value)

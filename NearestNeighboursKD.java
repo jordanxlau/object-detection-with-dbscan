@@ -32,16 +32,14 @@ public class NearestNeighboursKD {
      * @param node the current node to be compared/searched
      * @return list of points that are neighbours */
 	public List<Point3D> rangeQuery(Point3D p, double eps, List neighbours, KDtree.KDnode node) {
-		if (node == null){
-			System.out.println("TRACE");
-			return new ArrayList<Point3D>();
-		}
+		if (node == null)
+			return neighbours;
 		if (p.distance(node.point) < eps) //this node's point is within the specified epsilon of p
-			neighbours.add(node.point); //add the current node to the 
+			neighbours.add(node.point); //add the current node to the list of neighbours
 		if (p.get(node.axis) - eps <= node.value) //neighbours may be in the left subtree
-			return rangeQuery(p, eps, neighbours, node.left); 
+			rangeQuery(p, eps, neighbours, node.left);
 		if (p.get(node.axis) + eps > node.value) //neighbours may be in the right subtree
-			return rangeQuery(p, eps, neighbours, node.right);
+			rangeQuery(p, eps, neighbours, node.right);
 		return neighbours;
 	}
 

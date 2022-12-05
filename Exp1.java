@@ -12,33 +12,35 @@ import java.io.*;
 */ 
 public class Exp1 {
   
-	// reads a csv file of 3D points (rethrow exceptions!)
-	public static List<Point3D> read(String filename) throws Exception {
-	  
-		List<Point3D> points= new ArrayList<Point3D>(); 
-		double x,y,z;
+    /** collects points from a .csv file
+     * @param filename the file to read
+     * @return the extracted list of points */
+    public static List<Point3D> read(String filename){
+        String input;
+        double x, y, z;
+        List<Point3D> db = new ArrayList<Point3D>();
 
-		Scanner sc = new Scanner(new File(filename));  
-		// sets the delimiter pattern to be , or \n \r
-		sc.useDelimiter(",|\n|\r");  
+        try {
+            BufferedReader r = new BufferedReader(new FileReader(filename));
+            
+            input = r.readLine(); // read first row (column labels)
+            while ((input = r.readLine()) != null) { // read each subsequent row if possible
+                String[] array = input.split(","); // process each point information
+                x = Double.valueOf(array[0]);
+                y = Double.valueOf(array[1]);
+                z = Double.valueOf(array[2]);
+                db.add( new Point3D(x, y, z) ); // add point to db
+            }
 
-		// skipping the first line x y z
-		sc.next(); sc.next(); sc.next();
+            r.close();
+        } catch (IOException e) {}
 
-		// read points
-		while (sc.hasNext()) {  
-			x= Double.parseDouble(sc.next());
-			y= Double.parseDouble(sc.next());
-			z= Double.parseDouble(sc.next());
-			points.add(new Point3D(x,y,z));  
-		}
+        return db;
+    }
 
-		sc.close();  //closes the scanner  
+	public static void main(String[] args) throws Exception {
+		args = new String[]{"xerophthalmiology", "0.05", "Point_Cloud_1.csv", "-5.429850155", "0.807567048", "-0.398216823"};// xerophthalmiology 0.05 Point_Cloud_1.csv -5.429850155 0.807567048 -0.398216823
 
-		return points;
-	}
-
-	public static void main(String[] args) throws Exception {  
 		// not reading args[0]
 		double eps= Double.parseDouble(args[1]);
 
@@ -48,8 +50,9 @@ public class Exp1 {
 		Point3D query= new Point3D(Double.parseDouble(args[3]), Double.parseDouble(args[4]), Double.parseDouble(args[5]));
 
 		// creates the NearestNeighbor instance
-		NearestNeighbors nn= new NearestNeighbors(points);
-		List<Point3D> neighbors= nn.rangeQuery(query,eps);
+		NearestNeighboursKD nn= new NearestNeighboursKD(points);
+		List<Point3D> neighbors= nn.rangeQuery(query,eps,new ArrayList<Point3D>(),nn.getTree().getRoot());
+		System.out.println("TRACE: " + nn.getTree().getRoot().point);
 
 		System.out.println("number of neighbors= "+neighbors.size());
 		System.out.println(neighbors);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /** represents all points in the neighbourhood of a certain {@link Point3D}
  * implements a simple rangeQuery algorithm using a {@link List}
  * @author Jordan Lau 300240600 */
-public class NearestNeighbours{
+public class NearestNeighbours extends Neighbours{
 
     /** the point cloud database, in the form of a {@link List} */
 	private	List<Point3D> db;

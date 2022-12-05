@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /** represents all points in the neighbourhood of a certain {@link Point3D}
  * implements a rangeQuery algorithm using a {@link KDtree}
  * @author Jordan Lau 300240600 */
-public class NearestNeighboursKD {
+public class NearestNeighboursKD extends Neighbours{
 
 	/** the point cloud database */
 	private KDtree db;
@@ -31,7 +31,29 @@ public class NearestNeighboursKD {
      * @param neighbours the list of neighbours
      * @param node the current node to be compared/searched
      * @return list of points that are neighbours */
-	public List<Point3D> rangeQuery(Point3D p, double eps, List neighbours, KDtree.KDnode node) {
+	private List<Point3D> rangeQuery(Point3D p, double eps, List neighbours, KDtree.KDnode node) {
+		if (node == null)
+			return neighbours;
+		if (p.distance(node.point) < eps) //this node's point is within the specified epsilon of p
+			neighbours.add(node.point); //add the current node to the list of neighbours
+		if (p.get(node.axis) - eps <= node.value) //neighbours may be in the left subtree
+			rangeQuery(p, eps, neighbours, node.left);
+		if (p.get(node.axis) + eps > node.value) //neighbours may be in the right subtree
+			rangeQuery(p, eps, neighbours, node.right);
+		return neighbours;
+	}
+
+	/** finds the neighbours of a point
+     * O(logn) complexity in average case?
+     * @param p the point
+     * @param eps the distance within which another point is considered "a neighbour"
+     * @param neighbours the list of neighbours
+     * @param node the current node to be compared/searched
+     * @return list of points that are neighbours */
+	public List<Point3D> rangeQuery(Point3D p, double eps) {
+		List neighbours = new ArrayList<Point3D>();
+		KDtree.KDnode node = this.getTree().getRoot();
+
 		if (node == null)
 			return neighbours;
 		if (p.distance(node.point) < eps) //this node's point is within the specified epsilon of p

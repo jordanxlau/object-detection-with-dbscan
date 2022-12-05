@@ -2,6 +2,8 @@
  * @author Jordan Lau 300240600 */
 public class KDtree {
 
+	/** inner class representing a node in a 3d tree
+	 * @author Robert Laganiere */
 	public class KDnode {
 
 		public Point3D point;
@@ -15,14 +17,6 @@ public class KDtree {
 			this.axis= axis;
 			this.value= pt.get(axis);
 			left= right= null;
-		}
-
-		public boolean hasLeft(){
-			return this.left != null;
-		}
-
-		public boolean hasRight(){
-			return this.right != null;
 		}
 	
 	}
@@ -43,7 +37,6 @@ public class KDtree {
 	public KDnode insert(Point3D p, KDnode node, int currentAxis) {
 		if (root == null){
 			root = new KDnode(p, currentAxis);
-			//return root;
 		}
 
 		if (node == null)

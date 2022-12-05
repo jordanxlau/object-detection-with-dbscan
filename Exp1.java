@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.io.*;
 
 /**
- * Incomplete Experiment 1 
+ * Experiment 1 - Validation
  *
  * @author Robert Laganiere
  * @author Jordan Lau, 300240600
@@ -39,26 +39,28 @@ public class Exp1 {
     }
 
 	public static void main(String[] args) throws Exception {
-		args = new String[]{"xerophthalmiology", "0.05", "Point_Cloud_1.csv", "14.15982089", "4.680702457", "-0.133791584"};
-
-		// not reading args[0]
+		String type = args[0];
 		double eps= Double.parseDouble(args[1]);
-
 		List<Point3D> points= Exp1.read(args[2]); // reads the csv file
-
 		Point3D query= new Point3D(Double.parseDouble(args[3]), Double.parseDouble(args[4]), Double.parseDouble(args[5]));
 
-		//NearestNeighboursKD nn= new NearestNeighboursKD(points);
-		//List<Point3D> neighbors= nn.rangeQuery(query,eps,new ArrayList<Point3D>(),nn.getTree().getRoot());
-		NearestNeighbours nn= new NearestNeighbours(points);
-		List<Point3D> neighbors= nn.rangeQuery(query,eps);
+		List<Point3D> neighbors = new ArrayList<Point3D>();
+		Neighbours nn;
 
+		if (type.equals("kd"))
+			nn = new NearestNeighboursKD(points);
+		else
+			nn = new NearestNeighbours(points);
+
+		neighbors= nn.rangeQuery(query,eps);
+		
 		try{
-			BufferedWriter w = new BufferedWriter(new FileWriter("pt6_lin.txt"));
+			BufferedWriter w = new BufferedWriter(new FileWriter("pt_" + type + ".txt"));
 			for (Point3D p : neighbors)
 				w.write(p + "\n");
 			w.close();
 		} catch (Exception e){}
+
 
 	}
 }

@@ -1,7 +1,4 @@
 # object-detection-with-dbscan
-In this project (submitted as part of the requirements for CSI 2510), I implement a data clustering algorithm, DBSCAN (Density-Based Spatial Clustering of Applications with Noise).
-
-DBScan finds the nearest neighbours of all points within epsilon value. It then labels them as a cluster if there are greater than minPts number of points.
 
 To run with 1.2 as eps and 10 as minPts:
 ```

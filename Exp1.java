@@ -41,7 +41,7 @@ public class Exp1 {
 	public static void main(String[] args) throws Exception {
 		String type = args[0];
 		double eps= Double.parseDouble(args[1]);
-		List<Point3D> points= Exp1.read(args[2]); // reads the csv file
+		List<Point3D> points= read(args[2]); // reads the csv file
 		Point3D query= new Point3D(Double.parseDouble(args[3]), Double.parseDouble(args[4]), Double.parseDouble(args[5]));
 
 		List<Point3D> neighbors = new ArrayList<Point3D>();

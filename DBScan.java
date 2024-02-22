@@ -54,7 +54,7 @@ public class DBScan{
         }
     }
     
-    /** implements the DBScan algorithm
+    /** implements the DBScan algorithm (using linear rangeQuery implementation)
      * O(n) complexity */
     public void findClusters(){
         for (Point3D p : this.db) {

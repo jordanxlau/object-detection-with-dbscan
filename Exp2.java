@@ -36,10 +36,13 @@ public class Exp2{
         return db;
     }
 
-	public static void main(String[] args){		
+	public static void main(String[] args){
+		args = new String[]{"kd", "0.5", "Point_Cloud_3.csv", "10"};
+
 		String type = args[0].toLowerCase();
 		double eps= Double.parseDouble(args[1]);
-		List<Point3D> points= Exp1.read(args[2]); // reads the csv file
+		List<Point3D> points= read(args[2]); // reads the csv file
+		int step = Integer.parseInt(args[3]);
 		
 		long startTime, endTime, average;
 		Point3D query;
@@ -51,7 +54,7 @@ public class Exp2{
 			nn = new NearestNeighbours(points);
 		
 		//run the tests
-		for (int i = 10; i < points.size(); i+=10){
+		for (int i = step; i < points.size(); i+=step){
 			query = points.get(i);	
 
 			startTime = System.nanoTime();
